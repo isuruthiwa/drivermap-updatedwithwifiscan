@@ -1,7 +1,7 @@
-#Wed Feb 12 15:21:28 IST 2020
-base.0=C\:\\Users\\ASUS\\Downloads\\driver-app-feb11\\driver-app-feb11\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\0
+#Wed Feb 12 20:54:58 IST 2020
+base.0=C\:\\Users\\ASUS\\Downloads\\driver-app-feb11\\driver-app-feb11 - ANDROIDQ\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\1
 path.1=classes.dex
 renamed.1=classes2.dex
 path.0=classes.dex
 renamed.0=classes.dex
-base.1=C\:\\Users\\ASUS\\Downloads\\driver-app-feb11\\driver-app-feb11\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\1
+base.1=C\:\\Users\\ASUS\\Downloads\\driver-app-feb11\\driver-app-feb11 - ANDROIDQ\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\0

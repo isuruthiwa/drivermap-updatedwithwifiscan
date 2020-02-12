@@ -1076,9 +1076,6 @@ id textView5
 id textView6
 id textView8
 id time
-id timer1
-id timer2
-id timer3
 id title
 id titleDividerNoCustom
 id title_template

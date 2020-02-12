@@ -1,9 +1,9 @@
 -- Merging decision tree log ---
 manifest
-ADDED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11\app\src\main\AndroidManifest.xml:2:1-62:12
-INJECTED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11\app\src\main\AndroidManifest.xml:2:1-62:12
-INJECTED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11\app\src\main\AndroidManifest.xml:2:1-62:12
-INJECTED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11\app\src\main\AndroidManifest.xml:2:1-62:12
+ADDED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11 - ANDROIDQ\app\src\main\AndroidManifest.xml:2:1-62:12
+INJECTED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11 - ANDROIDQ\app\src\main\AndroidManifest.xml:2:1-62:12
+INJECTED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11 - ANDROIDQ\app\src\main\AndroidManifest.xml:2:1-62:12
+INJECTED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11 - ANDROIDQ\app\src\main\AndroidManifest.xml:2:1-62:12
 MERGED from [androidx.multidex:multidex:2.0.0] C:\Users\ASUS\.gradle\caches\transforms-1\files-1.1\multidex-2.0.0.aar\b516f839a5b5ecda7a0220c9742be36b\AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.appcompat:appcompat:1.0.0] C:\Users\ASUS\.gradle\caches\transforms-1\files-1.1\appcompat-1.0.0.aar\4edc3c17b86502a79c534cc67805831b\AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.constraintlayout:constraintlayout:1.1.3] C:\Users\ASUS\.gradle\caches\transforms-1\files-1.1\constraintlayout-1.1.3.aar\5a5755de42868dad4b0c3a3bef370e96\AndroidManifest.xml:2:1-11:12
@@ -43,63 +43,63 @@ MERGED from [androidx.interpolator:interpolator:1.0.0] C:\Users\ASUS\.gradle\cac
 MERGED from [androidx.lifecycle:lifecycle-livedata:2.0.0] C:\Users\ASUS\.gradle\caches\transforms-1\files-1.1\lifecycle-livedata-2.0.0.aar\412e92e4e1d207b62a478df486b2cae3\AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.0.0] C:\Users\ASUS\.gradle\caches\transforms-1\files-1.1\lifecycle-livedata-core-2.0.0.aar\2ee08112d62fb040c8468f8b577fa9a5\AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.arch.core:core-runtime:2.0.0] C:\Users\ASUS\.gradle\caches\transforms-1\files-1.1\core-runtime-2.0.0.aar\872c0c44cf1ff250e3f00f01b93051cd\AndroidManifest.xml:17:1-22:12
-INJECTED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11\app\src\main\AndroidManifest.xml:2:1-62:12
-INJECTED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11\app\src\main\AndroidManifest.xml:2:1-62:12
-INJECTED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11\app\src\main\AndroidManifest.xml:2:1-62:12
+INJECTED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11 - ANDROIDQ\app\src\main\AndroidManifest.xml:2:1-62:12
+INJECTED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11 - ANDROIDQ\app\src\main\AndroidManifest.xml:2:1-62:12
+INJECTED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11 - ANDROIDQ\app\src\main\AndroidManifest.xml:2:1-62:12
 	package
-		ADDED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11\app\src\main\AndroidManifest.xml:4:5-36
-		INJECTED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11\app\src\main\AndroidManifest.xml
-		INJECTED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11\app\src\main\AndroidManifest.xml
+		ADDED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11 - ANDROIDQ\app\src\main\AndroidManifest.xml:4:5-36
+		INJECTED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11 - ANDROIDQ\app\src\main\AndroidManifest.xml
+		INJECTED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11 - ANDROIDQ\app\src\main\AndroidManifest.xml
 	android:versionName
-		INJECTED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11\app\src\main\AndroidManifest.xml
-		ADDED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11\app\src\main\AndroidManifest.xml:2:1-62:12
-		INJECTED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11\app\src\main\AndroidManifest.xml
+		INJECTED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11 - ANDROIDQ\app\src\main\AndroidManifest.xml
+		ADDED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11 - ANDROIDQ\app\src\main\AndroidManifest.xml:2:1-62:12
+		INJECTED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11 - ANDROIDQ\app\src\main\AndroidManifest.xml
 	xmlns:tools
-		ADDED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11\app\src\main\AndroidManifest.xml:3:5-51
+		ADDED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11 - ANDROIDQ\app\src\main\AndroidManifest.xml:3:5-51
 	android:versionCode
-		INJECTED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11\app\src\main\AndroidManifest.xml
-		ADDED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11\app\src\main\AndroidManifest.xml:2:1-62:12
-		INJECTED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11\app\src\main\AndroidManifest.xml
+		INJECTED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11 - ANDROIDQ\app\src\main\AndroidManifest.xml
+		ADDED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11 - ANDROIDQ\app\src\main\AndroidManifest.xml:2:1-62:12
+		INJECTED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11 - ANDROIDQ\app\src\main\AndroidManifest.xml
 	xmlns:android
-		ADDED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11\app\src\main\AndroidManifest.xml:2:11-69
+		ADDED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11 - ANDROIDQ\app\src\main\AndroidManifest.xml:2:11-69
 uses-permission#android.permission.ACCESS_FINE_LOCATION
-ADDED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11\app\src\main\AndroidManifest.xml:10:5-79
+ADDED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11 - ANDROIDQ\app\src\main\AndroidManifest.xml:10:5-79
 	android:name
-		ADDED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11\app\src\main\AndroidManifest.xml:10:22-76
+		ADDED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11 - ANDROIDQ\app\src\main\AndroidManifest.xml:10:22-76
 uses-permission#android.permission.ACCESS_COARSE_LOCATION
-ADDED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11\app\src\main\AndroidManifest.xml:11:5-81
+ADDED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11 - ANDROIDQ\app\src\main\AndroidManifest.xml:11:5-81
 	android:name
-		ADDED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11\app\src\main\AndroidManifest.xml:11:22-78
+		ADDED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11 - ANDROIDQ\app\src\main\AndroidManifest.xml:11:22-78
 uses-permission#android.permission.ACCESS_NETWORK_STATE
-ADDED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11\app\src\main\AndroidManifest.xml:12:5-79
+ADDED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11 - ANDROIDQ\app\src\main\AndroidManifest.xml:12:5-79
 MERGED from [com.google.android.gms:play-services-maps:16.1.0] C:\Users\ASUS\.gradle\caches\transforms-1\files-1.1\jetified-play-services-maps-16.1.0.aar\4238057b4ad34881eaaf56515683c761\AndroidManifest.xml:23:5-79
 MERGED from [com.google.android.gms:play-services-maps:16.1.0] C:\Users\ASUS\.gradle\caches\transforms-1\files-1.1\jetified-play-services-maps-16.1.0.aar\4238057b4ad34881eaaf56515683c761\AndroidManifest.xml:23:5-79
 	android:name
-		ADDED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11\app\src\main\AndroidManifest.xml:12:22-76
+		ADDED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11 - ANDROIDQ\app\src\main\AndroidManifest.xml:12:22-76
 uses-permission#android.permission.ACCESS_WIFI_STATE
-ADDED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11\app\src\main\AndroidManifest.xml:13:5-76
+ADDED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11 - ANDROIDQ\app\src\main\AndroidManifest.xml:13:5-76
 	android:name
-		ADDED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11\app\src\main\AndroidManifest.xml:13:22-73
+		ADDED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11 - ANDROIDQ\app\src\main\AndroidManifest.xml:13:22-73
 uses-permission#android.permission.CHANGE_WIFI_STATE
-ADDED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11\app\src\main\AndroidManifest.xml:14:5-76
+ADDED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11 - ANDROIDQ\app\src\main\AndroidManifest.xml:14:5-76
 	android:name
-		ADDED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11\app\src\main\AndroidManifest.xml:14:22-73
+		ADDED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11 - ANDROIDQ\app\src\main\AndroidManifest.xml:14:22-73
 uses-permission#android.permission.INTERNET
-ADDED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11\app\src\main\AndroidManifest.xml:15:5-67
+ADDED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11 - ANDROIDQ\app\src\main\AndroidManifest.xml:15:5-67
 MERGED from [com.google.android.gms:play-services-maps:16.1.0] C:\Users\ASUS\.gradle\caches\transforms-1\files-1.1\jetified-play-services-maps-16.1.0.aar\4238057b4ad34881eaaf56515683c761\AndroidManifest.xml:24:5-67
 MERGED from [com.google.android.gms:play-services-maps:16.1.0] C:\Users\ASUS\.gradle\caches\transforms-1\files-1.1\jetified-play-services-maps-16.1.0.aar\4238057b4ad34881eaaf56515683c761\AndroidManifest.xml:24:5-67
 	android:name
-		ADDED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11\app\src\main\AndroidManifest.xml:15:22-64
+		ADDED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11 - ANDROIDQ\app\src\main\AndroidManifest.xml:15:22-64
 uses-permission#android.permission.ACCESS_BACKGROUND_LOCATION
-ADDED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11\app\src\main\AndroidManifest.xml:16:5-85
+ADDED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11 - ANDROIDQ\app\src\main\AndroidManifest.xml:16:5-85
 	android:name
-		ADDED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11\app\src\main\AndroidManifest.xml:16:22-82
+		ADDED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11 - ANDROIDQ\app\src\main\AndroidManifest.xml:16:22-82
 uses-permission#com.highbryds.gpstracker.GPSService
-ADDED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11\app\src\main\AndroidManifest.xml:17:5-74
+ADDED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11 - ANDROIDQ\app\src\main\AndroidManifest.xml:17:5-74
 	android:name
-		ADDED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11\app\src\main\AndroidManifest.xml:17:22-72
+		ADDED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11 - ANDROIDQ\app\src\main\AndroidManifest.xml:17:22-72
 application
-ADDED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11\app\src\main\AndroidManifest.xml:19:5-60:19
+ADDED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11 - ANDROIDQ\app\src\main\AndroidManifest.xml:19:5-60:19
 MERGED from [androidx.constraintlayout:constraintlayout:1.1.3] C:\Users\ASUS\.gradle\caches\transforms-1\files-1.1\constraintlayout-1.1.3.aar\5a5755de42868dad4b0c3a3bef370e96\AndroidManifest.xml:9:5-20
 MERGED from [androidx.constraintlayout:constraintlayout:1.1.3] C:\Users\ASUS\.gradle\caches\transforms-1\files-1.1\constraintlayout-1.1.3.aar\5a5755de42868dad4b0c3a3bef370e96\AndroidManifest.xml:9:5-20
 MERGED from [com.google.android.gms:play-services-maps:16.1.0] C:\Users\ASUS\.gradle\caches\transforms-1\files-1.1\jetified-play-services-maps-16.1.0.aar\4238057b4ad34881eaaf56515683c761\AndroidManifest.xml:30:5-36:19
@@ -123,83 +123,83 @@ MERGED from [androidx.versionedparcelable:versionedparcelable:1.0.0] C:\Users\AS
 	android:appComponentFactory
 		ADDED from [androidx.core:core:1.0.0] C:\Users\ASUS\.gradle\caches\transforms-1\files-1.1\core-1.0.0.aar\b1418af80fbe1310bb6e5075d34adc42\AndroidManifest.xml:22:18-86
 	android:supportsRtl
-		ADDED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11\app\src\main\AndroidManifest.xml:26:9-35
+		ADDED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11 - ANDROIDQ\app\src\main\AndroidManifest.xml:26:9-35
 	android:label
-		ADDED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11\app\src\main\AndroidManifest.xml:24:9-41
+		ADDED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11 - ANDROIDQ\app\src\main\AndroidManifest.xml:24:9-41
 	android:roundIcon
-		ADDED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11\app\src\main\AndroidManifest.xml:25:9-52
+		ADDED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11 - ANDROIDQ\app\src\main\AndroidManifest.xml:25:9-52
 	android:icon
-		ADDED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11\app\src\main\AndroidManifest.xml:23:9-41
+		ADDED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11 - ANDROIDQ\app\src\main\AndroidManifest.xml:23:9-41
 	android:allowBackup
-		ADDED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11\app\src\main\AndroidManifest.xml:22:9-35
+		ADDED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11 - ANDROIDQ\app\src\main\AndroidManifest.xml:22:9-35
 	android:theme
-		ADDED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11\app\src\main\AndroidManifest.xml:27:9-40
+		ADDED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11 - ANDROIDQ\app\src\main\AndroidManifest.xml:27:9-40
 	android:networkSecurityConfig
-		ADDED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11\app\src\main\AndroidManifest.xml:20:9-69
+		ADDED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11 - ANDROIDQ\app\src\main\AndroidManifest.xml:20:9-69
 	android:usesCleartextTraffic
-		ADDED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11\app\src\main\AndroidManifest.xml:21:9-44
+		ADDED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11 - ANDROIDQ\app\src\main\AndroidManifest.xml:21:9-44
 uses-library#org.apache.http.legacy
-ADDED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11\app\src\main\AndroidManifest.xml:28:9-87
+ADDED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11 - ANDROIDQ\app\src\main\AndroidManifest.xml:28:9-87
 MERGED from [com.google.android.gms:play-services-maps:16.1.0] C:\Users\ASUS\.gradle\caches\transforms-1\files-1.1\jetified-play-services-maps-16.1.0.aar\4238057b4ad34881eaaf56515683c761\AndroidManifest.xml:33:9-35:40
 MERGED from [com.google.android.gms:play-services-maps:16.1.0] C:\Users\ASUS\.gradle\caches\transforms-1\files-1.1\jetified-play-services-maps-16.1.0.aar\4238057b4ad34881eaaf56515683c761\AndroidManifest.xml:33:9-35:40
 	android:required
-		ADDED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11\app\src\main\AndroidManifest.xml:28:61-85
+		ADDED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11 - ANDROIDQ\app\src\main\AndroidManifest.xml:28:61-85
 	android:name
-		ADDED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11\app\src\main\AndroidManifest.xml:28:23-60
+		ADDED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11 - ANDROIDQ\app\src\main\AndroidManifest.xml:28:23-60
 activity#com.example.driverapp.LocalDatabase
-ADDED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11\app\src\main\AndroidManifest.xml:29:9-60
+ADDED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11 - ANDROIDQ\app\src\main\AndroidManifest.xml:29:9-60
 	android:name
-		ADDED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11\app\src\main\AndroidManifest.xml:29:19-48
+		ADDED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11 - ANDROIDQ\app\src\main\AndroidManifest.xml:29:19-48
 meta-data#com.google.android.gms.version
-ADDED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11\app\src\main\AndroidManifest.xml:38:9-40:69
+ADDED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11 - ANDROIDQ\app\src\main\AndroidManifest.xml:38:9-40:69
 MERGED from [com.google.android.gms:play-services-basement:16.0.1] C:\Users\ASUS\.gradle\caches\transforms-1\files-1.1\jetified-play-services-basement-16.0.1.aar\d1e6ccf75bf88a1b49489214003f4082\AndroidManifest.xml:23:9-25:69
 MERGED from [com.google.android.gms:play-services-basement:16.0.1] C:\Users\ASUS\.gradle\caches\transforms-1\files-1.1\jetified-play-services-basement-16.0.1.aar\d1e6ccf75bf88a1b49489214003f4082\AndroidManifest.xml:23:9-25:69
 	android:value
-		ADDED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11\app\src\main\AndroidManifest.xml:40:13-66
+		ADDED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11 - ANDROIDQ\app\src\main\AndroidManifest.xml:40:13-66
 	android:name
-		ADDED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11\app\src\main\AndroidManifest.xml:39:13-58
+		ADDED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11 - ANDROIDQ\app\src\main\AndroidManifest.xml:39:13-58
 meta-data#com.google.android.geo.API_KEY
-ADDED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11\app\src\main\AndroidManifest.xml:41:9-43:55
+ADDED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11 - ANDROIDQ\app\src\main\AndroidManifest.xml:41:9-43:55
 	android:value
-		ADDED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11\app\src\main\AndroidManifest.xml:43:13-52
+		ADDED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11 - ANDROIDQ\app\src\main\AndroidManifest.xml:43:13-52
 	android:name
-		ADDED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11\app\src\main\AndroidManifest.xml:42:13-58
+		ADDED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11 - ANDROIDQ\app\src\main\AndroidManifest.xml:42:13-58
 activity#com.example.driverapp.DriverMapActivity
-ADDED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11\app\src\main\AndroidManifest.xml:45:9-49:65
+ADDED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11 - ANDROIDQ\app\src\main\AndroidManifest.xml:45:9-49:65
 	android:screenOrientation
-		ADDED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11\app\src\main\AndroidManifest.xml:48:13-49
+		ADDED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11 - ANDROIDQ\app\src\main\AndroidManifest.xml:48:13-49
 	android:label
-		ADDED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11\app\src\main\AndroidManifest.xml:49:13-62
+		ADDED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11 - ANDROIDQ\app\src\main\AndroidManifest.xml:49:13-62
 	android:configChanges
-		ADDED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11\app\src\main\AndroidManifest.xml:47:13-63
+		ADDED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11 - ANDROIDQ\app\src\main\AndroidManifest.xml:47:13-63
 	android:name
-		ADDED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11\app\src\main\AndroidManifest.xml:46:13-46
+		ADDED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11 - ANDROIDQ\app\src\main\AndroidManifest.xml:46:13-46
 activity#com.example.driverapp.SignUpActivity
-ADDED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11\app\src\main\AndroidManifest.xml:50:9-51:51
+ADDED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11 - ANDROIDQ\app\src\main\AndroidManifest.xml:50:9-51:51
 	android:screenOrientation
-		ADDED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11\app\src\main\AndroidManifest.xml:51:13-49
+		ADDED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11 - ANDROIDQ\app\src\main\AndroidManifest.xml:51:13-49
 	android:name
-		ADDED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11\app\src\main\AndroidManifest.xml:50:19-49
+		ADDED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11 - ANDROIDQ\app\src\main\AndroidManifest.xml:50:19-49
 activity#com.example.driverapp.MainActivity
-ADDED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11\app\src\main\AndroidManifest.xml:52:9-59:20
+ADDED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11 - ANDROIDQ\app\src\main\AndroidManifest.xml:52:9-59:20
 	android:screenOrientation
-		ADDED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11\app\src\main\AndroidManifest.xml:53:13-49
+		ADDED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11 - ANDROIDQ\app\src\main\AndroidManifest.xml:53:13-49
 	android:name
-		ADDED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11\app\src\main\AndroidManifest.xml:52:19-47
+		ADDED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11 - ANDROIDQ\app\src\main\AndroidManifest.xml:52:19-47
 intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
-ADDED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11\app\src\main\AndroidManifest.xml:54:13-58:29
+ADDED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11 - ANDROIDQ\app\src\main\AndroidManifest.xml:54:13-58:29
 action#android.intent.action.MAIN
-ADDED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11\app\src\main\AndroidManifest.xml:55:17-69
+ADDED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11 - ANDROIDQ\app\src\main\AndroidManifest.xml:55:17-69
 	android:name
-		ADDED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11\app\src\main\AndroidManifest.xml:55:25-66
+		ADDED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11 - ANDROIDQ\app\src\main\AndroidManifest.xml:55:25-66
 category#android.intent.category.LAUNCHER
-ADDED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11\app\src\main\AndroidManifest.xml:57:17-77
+ADDED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11 - ANDROIDQ\app\src\main\AndroidManifest.xml:57:17-77
 	android:name
-		ADDED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11\app\src\main\AndroidManifest.xml:57:27-74
+		ADDED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11 - ANDROIDQ\app\src\main\AndroidManifest.xml:57:27-74
 uses-sdk
-INJECTED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11\app\src\main\AndroidManifest.xml reason: use-sdk injection requested
-INJECTED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11\app\src\main\AndroidManifest.xml
-INJECTED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11\app\src\main\AndroidManifest.xml
+INJECTED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11 - ANDROIDQ\app\src\main\AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11 - ANDROIDQ\app\src\main\AndroidManifest.xml
+INJECTED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11 - ANDROIDQ\app\src\main\AndroidManifest.xml
 MERGED from [androidx.multidex:multidex:2.0.0] C:\Users\ASUS\.gradle\caches\transforms-1\files-1.1\multidex-2.0.0.aar\b516f839a5b5ecda7a0220c9742be36b\AndroidManifest.xml:20:5-43
 MERGED from [androidx.multidex:multidex:2.0.0] C:\Users\ASUS\.gradle\caches\transforms-1\files-1.1\multidex-2.0.0.aar\b516f839a5b5ecda7a0220c9742be36b\AndroidManifest.xml:20:5-43
 MERGED from [androidx.appcompat:appcompat:1.0.0] C:\Users\ASUS\.gradle\caches\transforms-1\files-1.1\appcompat-1.0.0.aar\4edc3c17b86502a79c534cc67805831b\AndroidManifest.xml:20:5-44
@@ -278,16 +278,16 @@ MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.0.0] C:\Users\ASUS\.gr
 MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.0.0] C:\Users\ASUS\.gradle\caches\transforms-1\files-1.1\lifecycle-livedata-core-2.0.0.aar\2ee08112d62fb040c8468f8b577fa9a5\AndroidManifest.xml:20:5-44
 MERGED from [androidx.arch.core:core-runtime:2.0.0] C:\Users\ASUS\.gradle\caches\transforms-1\files-1.1\core-runtime-2.0.0.aar\872c0c44cf1ff250e3f00f01b93051cd\AndroidManifest.xml:20:5-44
 MERGED from [androidx.arch.core:core-runtime:2.0.0] C:\Users\ASUS\.gradle\caches\transforms-1\files-1.1\core-runtime-2.0.0.aar\872c0c44cf1ff250e3f00f01b93051cd\AndroidManifest.xml:20:5-44
-INJECTED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11\app\src\main\AndroidManifest.xml
-INJECTED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11\app\src\main\AndroidManifest.xml
+INJECTED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11 - ANDROIDQ\app\src\main\AndroidManifest.xml
+INJECTED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11 - ANDROIDQ\app\src\main\AndroidManifest.xml
 	android:targetSdkVersion
-		INJECTED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11\app\src\main\AndroidManifest.xml
-		ADDED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11\app\src\main\AndroidManifest.xml
-		INJECTED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11\app\src\main\AndroidManifest.xml
+		INJECTED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11 - ANDROIDQ\app\src\main\AndroidManifest.xml
+		ADDED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11 - ANDROIDQ\app\src\main\AndroidManifest.xml
+		INJECTED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11 - ANDROIDQ\app\src\main\AndroidManifest.xml
 	android:minSdkVersion
-		INJECTED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11\app\src\main\AndroidManifest.xml
-		ADDED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11\app\src\main\AndroidManifest.xml
-		INJECTED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11\app\src\main\AndroidManifest.xml
+		INJECTED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11 - ANDROIDQ\app\src\main\AndroidManifest.xml
+		ADDED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11 - ANDROIDQ\app\src\main\AndroidManifest.xml
+		INJECTED from C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11 - ANDROIDQ\app\src\main\AndroidManifest.xml
 uses-feature#0x00020000
 ADDED from [com.google.android.gms:play-services-maps:16.1.0] C:\Users\ASUS\.gradle\caches\transforms-1\files-1.1\jetified-play-services-maps-16.1.0.aar\4238057b4ad34881eaaf56515683c761\AndroidManifest.xml:26:5-28:35
 	android:glEsVersion
