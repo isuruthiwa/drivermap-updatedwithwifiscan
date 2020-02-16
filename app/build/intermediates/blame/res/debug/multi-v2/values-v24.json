@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "C:\\Users\\ASUS\\Downloads\\driver-app-feb11\\driver-app-feb11 - ANDROIDQ\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-v24\\values-v24.xml",
+            "outputFile": "/home/fyp19/Desktop/driver-app-feb11 - ANDROIDQ - NEWVERSION2/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-v24/values-v24.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\ASUS\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-1.0.0.aar\\4edc3c17b86502a79c534cc67805831b\\res\\values-v24\\values-v24.xml",
+                    "source": "/home/fyp19/.gradle/caches/transforms-1/files-1.1/appcompat-1.0.0.aar/31c25ef49a469efe5d7793c31a0f0db8/res/values-v24/values-v24.xml",
                     "from": {
                         "startLines": "2,3",
                         "startColumns": "4,4",
@@ -14,7 +14,7 @@
                     }
                 },
                 {
-                    "source": "C:\\Users\\ASUS\\.gradle\\caches\\transforms-1\\files-1.1\\media-1.0.0.aar\\1fbc1e1df276dbfa2d9c71da11a6b5aa\\res\\values-v24\\values-v24.xml",
+                    "source": "/home/fyp19/.gradle/caches/transforms-1/files-1.1/media-1.0.0.aar/8ca4e0fe1b94422fad6d51b6e824bea8/res/values-v24/values-v24.xml",
                     "from": {
                         "startLines": "2,3,4,5",
                         "startColumns": "4,4,4,4",

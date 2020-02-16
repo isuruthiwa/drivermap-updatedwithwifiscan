@@ -1,59 +1,73 @@
 package com.example.driverapp;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Intent;
+import android.icu.text.Edits;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
-
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class SignUpActivity extends AppCompatActivity {
-    private Button mSignUpButton;
-    private EditText mretypePassword,msignupPassword, msignUpEmail, msignUpPhoneNo,mNationalIDNo, mLastName, mFirstName;
-
-    private static final String TAG = "SignUpActivity";
-    private static final String FIRST_NAME = "first name";
-    private static final String LAST_NAME = "last name";
-    private static final String EMAIL_ADD = "email address";
-    private static final String NID = "national ID";
-    private static final String PHONE_NO = "phone no";
-
-
+    EditText mEmail,mPassword;
+    Button mSignup;
+    TextView mSign;
+    ImageView mView;
+    FirebaseAuth mFirebaseAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
 
-
-        mSignUpButton = (Button) findViewById(R.id.SignUp);
-
-        mretypePassword = (EditText) findViewById(R.id.retypePassword);
-        msignupPassword = (EditText) findViewById(R.id.signupPassword);
-        msignUpEmail = (EditText) findViewById(R.id.signUpEmail);
-        msignUpPhoneNo = (EditText) findViewById(R.id.signUpPhoneNo);
-        mNationalIDNo = (EditText) findViewById(R.id.NationalIdNo);
-        mLastName = (EditText) findViewById(R.id.LastName);
-        mFirstName = (EditText) findViewById(R.id.FirstName);
-
-        mSignUpButton.setOnClickListener(new View.OnClickListener() {
+        mFirebaseAuth = FirebaseAuth.getInstance();
+        mEmail = (EditText) findViewById(R.id.email);
+        mPassword = (EditText) findViewById(R.id.password);
+        mSignup = (Button) findViewById(R.id.button2);
+        mView = (ImageView) findViewById(R.id.imageView2);
+        mView.setImageResource(R.drawable.pin);
+        mSignup.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-
+            public void onClick(View view) {
+                String email = mEmail.getText().toString();
+                String password = mPassword.getText().toString();
+                if(email.isEmpty()){
+                    mEmail.setError("Please enter E-mail ID");
+                    mEmail.requestFocus();
+                }
+                else if(password.isEmpty()){
+                    mPassword.setError("Please enter E-mail ID");
+                    mPassword.requestFocus();
+                }
+                else if(email.isEmpty() && password.isEmpty()){
+                    Toast.makeText(SignUpActivity.this,"Feilds are empty",Toast.LENGTH_SHORT).show();
+                }
+                else if(!(email.isEmpty() && password.isEmpty())){
+                    mFirebaseAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(SignUpActivity.this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if(!task.isSuccessful()){
+                                Toast.makeText(SignUpActivity.this,"SignUp Unsuccessful, Please try again",Toast.LENGTH_SHORT).show();
+                            }
+                            else {
+                                startActivity(new Intent(SignUpActivity.this, DriverMapActivity.class));
+                            }
+                        }
+                    });
+                }
+                else{
+                    Toast.makeText(SignUpActivity.this,"Error Occurred",Toast.LENGTH_SHORT).show();
+                }
             }
         });
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-
-
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-
     }
 }

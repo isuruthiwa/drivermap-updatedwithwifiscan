@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "C:\\Users\\ASUS\\Downloads\\driver-app-feb11\\driver-app-feb11 - ANDROIDQ\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-v18\\values-v18.xml",
+            "outputFile": "/home/fyp19/Desktop/driver-app-feb11 - ANDROIDQ - NEWVERSION2/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-v18/values-v18.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\ASUS\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-1.0.0.aar\\4edc3c17b86502a79c534cc67805831b\\res\\values-v18\\values-v18.xml",
+                    "source": "/home/fyp19/.gradle/caches/transforms-1/files-1.1/appcompat-1.0.0.aar/31c25ef49a469efe5d7793c31a0f0db8/res/values-v18/values-v18.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",

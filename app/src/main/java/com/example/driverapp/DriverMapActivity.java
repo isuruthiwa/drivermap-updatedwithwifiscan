@@ -78,9 +78,11 @@ public class DriverMapActivity extends FragmentActivity implements OnMapReadyCal
     public static TemporaryTable tempTable;               //Local database tempTable ghost
     QuarryArea Qarea;                       //Quary area ghost
 
+    private long backpressedTime;
+    private Toast backToast;
     private GoogleMap mMap;                 //Map instance
     GoogleApiClient mGoogleApiClient;       //Google API caller
-    Location mLastLocation;                 //Last location variable
+    public static Location mLastLocation;                 //Last location variable
     LocationRequest mLocationRequest;       //Location request variable
 
     private ImageView mLogout;                 //Logout button
@@ -124,6 +126,10 @@ public class DriverMapActivity extends FragmentActivity implements OnMapReadyCal
     public double htm1L = 0.0;
     public double htm2L = 0.0;
 
+    private int sstm1 = 0;
+    private int sstm2 = 0;
+    private int showCounter = 0;
+
     public double compassH = 0.0;
     public String RoadSignToShow = "nosign";
     public String RoadSignToShow2 = "nosign";
@@ -137,6 +143,7 @@ public class DriverMapActivity extends FragmentActivity implements OnMapReadyCal
     private ArrayAdapter adapter;
 
     public static List<RoadSign> roadSignList = new ArrayList<>();
+    //public static List<TempSigns> tempSignsList = new ArrayList<>();
 
     Thread task;
     Thread ShowImage;
@@ -162,6 +169,8 @@ public class DriverMapActivity extends FragmentActivity implements OnMapReadyCal
     Map<String, Integer> drawableList = new HashMap<String, Integer>();
     LatLng lastSignLocation;
     String lastSignMessage;
+    double lastSignDistance, prevSignDistance=200;
+    double MINDISTANCETODYNAMIC=200;
 
     Calendar calendar;
 
@@ -257,6 +266,12 @@ public class DriverMapActivity extends FragmentActivity implements OnMapReadyCal
             wifiManager.setWifiEnabled(true);
         }
 
+        wifiManager = (WifiManager)
+                getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+
+        ScanBroadcastReceiver scanBroadcastReceiver = new ScanBroadcastReceiver();
+        registerReceiver(scanBroadcastReceiver,new IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION));
+
 
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, arrayList);
 //        listView.setAdapter(adapter);
@@ -333,427 +348,8 @@ public class DriverMapActivity extends FragmentActivity implements OnMapReadyCal
         task = new Thread(new Runnable() {
             @Override
             public void run() {
-
                 while (true) {
-
-                    wifiManager = (WifiManager)
-                            getApplicationContext().getSystemService(Context.WIFI_SERVICE);
-
-                    BroadcastReceiver wifiScanReceiver = new BroadcastReceiver() {
-                        @Override
-                        public void onReceive(Context c, Intent intent) {
-                            boolean success = intent.getBooleanExtra(
-                                    WifiManager.EXTRA_RESULTS_UPDATED, false);
-                            if (success) {
-                                arrayList.clear();
-                                results = wifiManager.getScanResults();
-                                //
-                                // System.out.println(results);
-                                try {
-                                    calendar = Calendar.getInstance();
-                                    for (ScanResult scanResult : results) {
-                                        arrayList.add(scanResult.SSID + " ; " + scanResult.level);
-                                        adapter.notifyDataSetChanged();
-                                    }
-
-                                    long hour=calendar.get(Calendar.HOUR_OF_DAY);
-                                    long min=calendar.get(Calendar.MINUTE);
-                                    long sec=calendar.get(Calendar.SECOND);
-
-                                    unixTime= hour*3600+min*60+sec;
-
-                                    //System.out.println("Array"+arrayList);
-                                    int scanfound=0;
-                                    for (int i = 0; i < arrayList.size(); i++) {
-                                        String rsu[] = arrayList.get(i).split(";");
-                                        if (rsu.length == 2) {
-                                            String ssid = arrayList.get(i).split(";")[0];
-                                            if (ssid.contains("RF")) {
-                                                /**
-                                                 All RSU signal message starts with "R2v" encrypted to "F5W"
-                                                 **/
-
-                                                //Flag to remind that sign was discovered
-                                                scanfound=1;
-                                                String rssi_val = arrayList.get(i).split(";")[1];
-                                                //Decrypting Location, Heading, Timestamp and Ciphered message
-                                                String dec = decrypt(ssid.substring(1));
-                                                String dec_ssid = dec;
-                                                System.out.println("Message: "+dec);
-
-                                                if(unixTime-beacontime>600) {
-                                                    System.out.println(unixTime-beacontime);
-                                                    System.out.println("Timeout");
-                                                    continue;
-                                                }
-                                                if(prevbeacontime>beacontime){
-                                                    System.out.println("Previous Message");
-                                                    continue;
-                                                }
-                                                prevbeacontime=beacontime;
-                                                lastSignMessage=dec;
-                                                signTxt.setText(dec.substring(0,2));
-//                            System.out.println(dec);
-
-                                                /**
-                                                 * Sign Validation with
-                                                 * TIMESTAMP
-                                                 */
-
-                                                //If 4-Way Junction
-                                                if(dec.substring(0,2).equals("RF")){
-                                                    signView1.setVisibility(View.VISIBLE);
-                                                    signView2.setVisibility(View.VISIBLE);
-                                                    signView3.setVisibility(View.VISIBLE);
-
-                                                    signTxt.setText("4-Way Junction");
-
-                                                    /**
-                                                     * Get angle difference between RSU and driver
-                                                     * Divide into 4 boundaries
-                                                     * 000 000 000 000 :: bitstream :: area1 area2 area3 area4
-                                                     * 000 means Left Forward Right
-                                                     * select which signals are relevant and show
-                                                     */
-                                                    double Head = GeneralHeading;//getHeading();
-                                                    System.out.println(beaconhead);
-                                                    double signselect = (beaconhead-Head)/90;
-                                                    System.out.println("signselect :"+signselect);
-                                                    if((signselect<0.5) & (signselect>-0.5)){
-                                                        signselect=0;
-                                                    }else if((signselect<1.5) & (signselect>0.5)){
-                                                        signselect=1;
-                                                    }
-                                                    else if((signselect<2.5) & (signselect>1.5)){
-                                                        signselect=2;
-                                                    }
-                                                    else if((signselect<-2.5) & (signselect>-1.5)){
-                                                        signselect=2;
-                                                    }
-                                                    else if((signselect<-0.5) & (signselect>-1.5)){
-                                                        signselect=3;
-                                                    }
-
-                                                    String selectBeacon = dec.substring(4,6);
-
-                                                    String a = selectBeacon.substring(0,  1);
-                                                    String b = selectBeacon.substring(1,  2);
-                                                    int l = obj.indexOf(a)+12;
-
-                                                    int m = obj.indexOf(b)+12;
-                                                    String signalStream= String.format("%6s",Integer.toBinaryString(l)).replace(" ","0")+String.format("%6s",Integer.toBinaryString(m)).replace(" ","0");
-                                                    char[] n =(signalStream.substring((int)signselect*3,(int)signselect*3+3)).toCharArray();
-
-//                                                    timer1.setVisibility(View.VISIBLE);
-//                                                    timer2.setVisibility(View.VISIBLE);
-//                                                    timer3.setVisibility(View.VISIBLE);
-
-                                                    if(n[0]=='1'){
-                                                        //timer1.setText("Go");
-                                                        signView1.setImageResource(R.drawable.gap_01);
-                                                    }else{
-                                                        //timer1.setText("Stop");
-                                                        signView1.setImageResource(R.drawable.gap_02);
-                                                    }
-
-                                                    if(n[1]=='1'){
-                                                        //timer2.setText("Go");
-                                                        signView2.setImageResource(R.drawable.gap_05);
-                                                    }else{
-                                                        //timer2.setText("Stop");
-                                                        signView2.setImageResource(R.drawable.gap_06);
-                                                    }
-
-                                                    if(n[2]=='1'){
-                                                        //timer3.setText("Go");
-                                                        signView3.setImageResource(R.drawable.gap_03);
-                                                    }else{
-                                                        //timer3.setText("Stop");
-                                                        signView3.setImageResource(R.drawable.gap_04);
-                                                    }
-
-                                                    ConvertTextToSpeech("Four way junction");
-
-                                                }
-
-                                                //If T Junction
-                                                else if(dec.substring(0,2).equals("TJ")){
-                                                    signLayout.setBackgroundResource(R.drawable.sign_back);
-                                                    signTxt.setText("T Junction");
-                                                    System.out.println("Inside T J");
-                                                    /**
-                                                     * Get angle difference between RSU and driver
-                                                     * Divide into 4 boundaries
-                                                     * 000 000 000 :: bitstream :: area1 area2 area3
-                                                     * area1 is the left side in main road
-                                                     * 000 means Left Forward Right
-                                                     * select which signals are relevant and show
-                                                     * TESTING REQUIRED
-                                                     */
-
-                                                    String timers=dec.substring(dec.length()-7);
-                                                    //System.out.println("Timers T Junction: "+timers);
-                                                    //double Head = 0;
-                                                    double Head=0;
-
-                                                    try {
-                                                        Head= GeneralHeading;//getHeading();
-                                                    }
-                                                    catch (Exception e){
-                                                        //Error from reading heading - Set to default heading
-                                                        //headingTextView.setText("getHeading Exception");
-                                                        Head=0;
-                                                    }
-                                                    //System.out.println(beaconhead);
-                                                    double signselect = ((beaconhead-Head)/90);
-                                                    System.out.println("signselect :"+signselect);
-                                                    if(abs(signselect)<0.5){
-                                                        signselect=0;
-                                                    }else if((signselect<1.5) & (signselect>0.5)){
-                                                        signselect=1;
-                                                    }
-                                                    else if(((signselect>-1.5) & (signselect<-0.5))|((signselect>2.5) & (signselect<3.5))){
-                                                        signselect=2;
-                                                    }
-                                                    else{
-                                                        signView2.setVisibility(View.INVISIBLE);
-                                                        signView3.setVisibility(View.INVISIBLE);
-                                                        signView1.setVisibility(View.INVISIBLE);
-                                                        signLayout.setBackgroundResource(0);
-                                                        continue;
-                                                    }
-
-
-                                                    String selectBeacon = dec.substring(2,3);
-
-                                                    String a = selectBeacon.substring(0,  1);
-                                                    //System.out.println("DEC:"+dec);
-                                                    int l = obj.indexOf(a);
-                                                    String signalStream= String.format("%6s",Integer.toBinaryString(l)).replace(" ","0");
-                                                    char[] n =(signalStream.substring((int)signselect*2,(int)signselect*2+2)).toCharArray();
-                                                    //System.out.println("SignalStream : "+signalStream);
-                                                    String tim = timers.substring((int)signselect*2,(int)signselect*2+2);
-                                                    int tim1= obj.indexOf(String.valueOf(timers.charAt(0)));
-                                                    int tim2= obj.indexOf(String.valueOf(timers.charAt(1)));
-                                                    //System.out.println("Tim Array: "+tim+"\nt1:"+tim1+", t2:"+tim2);
-
-
-                                                    signView1.setVisibility(View.INVISIBLE);
-                                                    signView2.setVisibility(View.INVISIBLE);
-                                                    signView3.setVisibility(View.INVISIBLE);
-//                                                    timer1.setVisibility(View.INVISIBLE);
-//                                                    timer2.setVisibility(View.INVISIBLE);
-//                                                    timer3.setVisibility(View.INVISIBLE);
-
-                                                    if(n[0]=='1'){
-                                                        if(signselect==0) {
-                                                            //timer3.setVisibility(View.VISIBLE);
-                                                            signView3.setVisibility(View.VISIBLE);
-                                                            //timer3.setText(String.valueOf(tim1));
-                                                            signView3.setImageResource(R.drawable.gap_03);
-                                                            ConvertTextToSpeech("You can turn left");
-                                                        }else if (signselect==1){
-                                                            //timer3.setVisibility(View.VISIBLE);
-                                                            signView3.setVisibility(View.VISIBLE);
-                                                            //timer3.setText(String.valueOf(tim1));
-                                                            signView3.setImageResource(R.drawable.gap_03);
-                                                            ConvertTextToSpeech("You can turn left");
-                                                        }else {
-                                                            //timer1.setVisibility(View.VISIBLE);
-                                                            signView1.setVisibility(View.VISIBLE);
-                                                            //timer1.setText(String.valueOf(tim1));
-                                                            signView1.setImageResource(R.drawable.gap_01);
-                                                            ConvertTextToSpeech("You can go straight");
-                                                        }
-
-                                                    }else{
-                                                        if(signselect==0) {
-                                                            //timer3.setVisibility(View.VISIBLE);
-                                                            signView3.setVisibility(View.VISIBLE);
-                                                            //timer3.setText(String.valueOf(tim1));
-                                                            signView3.setImageResource(R.drawable.gap_04);
-                                                        }else if (signselect==1){
-                                                            //timer3.setVisibility(View.VISIBLE);
-                                                            signView3.setVisibility(View.VISIBLE);
-                                                            //timer3.setText(String.valueOf(tim1));
-                                                            signView3.setImageResource(R.drawable.gap_04);
-                                                        }else {
-                                                            //timer1.setVisibility(View.VISIBLE);
-                                                            signView1.setVisibility(View.VISIBLE);
-                                                            //timer1.setText(String.valueOf(tim1));
-                                                            signView1.setImageResource(R.drawable.gap_02);
-                                                        }
-                                                    }
-
-                                                    if(n[1]=='1'){
-                                                        if(signselect==0) {
-                                                            //timer2.setVisibility(View.VISIBLE);
-                                                            signView2.setVisibility(View.VISIBLE);
-                                                            //timer2.setText(String.valueOf(tim2));
-                                                            signView2.setImageResource(R.drawable.gap_05);
-                                                            ConvertTextToSpeech("You can turn right");
-                                                        }else if (signselect==1){
-                                                            //timer1.setVisibility(View.VISIBLE);
-                                                            signView1.setVisibility(View.VISIBLE);
-                                                            //timer1.setText(String.valueOf(tim2));
-                                                            signView1.setImageResource(R.drawable.gap_01);
-                                                            ConvertTextToSpeech("You can go straight");
-                                                        }else {
-                                                            //timer2.setVisibility(View.VISIBLE);
-                                                            signView2.setVisibility(View.VISIBLE);
-                                                            //timer2.setText(String.valueOf(tim2));
-                                                            signView2.setImageResource(R.drawable.gap_05);
-                                                            ConvertTextToSpeech("You can turn right");
-                                                        }
-                                                    }else{
-                                                        if(signselect==0) {
-                                                            //timer2.setVisibility(View.VISIBLE);
-                                                            signView2.setVisibility(View.VISIBLE);
-                                                            //timer2.setText(String.valueOf(tim2));
-                                                            signView2.setImageResource(R.drawable.gap_06);
-
-                                                        }else if (signselect==1){
-                                                            //timer1.setVisibility(View.VISIBLE);
-                                                            signView1.setVisibility(View.VISIBLE);
-                                                            //timer1.setText(String.valueOf(tim2));
-                                                            signView1.setImageResource(R.drawable.gap_02);
-                                                        }else {
-                                                            //timer2.setVisibility(View.VISIBLE);
-                                                            signView2.setVisibility(View.VISIBLE);
-                                                            //timer2.setText(String.valueOf(tim2));
-                                                            signView2.setImageResource(R.drawable.gap_06);
-                                                        }
-
-                                                    }
-                                                    //ConvertTextToSpeech("T Junction");
-                                                }
-                                                else if(dec.substring(0,2).equals("EM")) {
-
-                                                    signView1.setVisibility(View.INVISIBLE);
-                                                    signView2.setVisibility(View.INVISIBLE);
-                                                    signView3.setVisibility(View.INVISIBLE);
-//                                                    timer1.setVisibility(View.INVISIBLE);
-//                                                    timer2.setVisibility(View.INVISIBLE);
-//                                                    timer3.setVisibility(View.INVISIBLE);
-
-                                                    signTxt.setText("Emergency Sign");
-                                                    //System.out.println("DEC::"+dec);
-                                                    String emergencymessage = dec.substring(2,3);
-                                                    int l = obj.indexOf(emergencymessage)+11;
-                                                    emergencymessage=obj.get(l);
-                                                    //System.out.println("l:"+l +" M:::"+emergencymessage);
-                                                    if(emergencymessage.equals("1")){
-                                                        signTxt.setText("EM: Lane Merger");
-
-                                                        signView1.setVisibility(View.VISIBLE);
-                                                        signView1.setImageResource(R.drawable.em00);
-                                                    }
-                                                    else if(emergencymessage.equals("2")){
-                                                        signTxt.setText("EM: Road Flood");
-                                                        signView1.setVisibility(View.VISIBLE);
-                                                        signView1.setImageResource(R.drawable.em01);
-                                                    }
-                                                    else if(emergencymessage.equals("3")){
-                                                        signTxt.setText("EM: Road Fire");
-                                                        signView1.setVisibility(View.VISIBLE);
-                                                        signView1.setImageResource(R.drawable.em02);
-                                                    }
-                                                    else if(emergencymessage.equals("4")){
-                                                        signTxt.setText("EM: Road Block");
-                                                        signView1.setVisibility(View.VISIBLE);
-                                                        signView1.setImageResource(R.drawable.em03);
-                                                    }
-                                                    else if(emergencymessage.equals("5")){
-                                                        signTxt.setText("EM: Oil Leak");
-                                                        signView1.setVisibility(View.VISIBLE);
-                                                        signView1.setImageResource(R.drawable.em04);
-                                                    }
-
-                                                }
-                                                else{
-                                                    String dec_s = dec.toLowerCase();
-                                                    dec_s = dec_s.replace('-', '_');
-                                                    dec_s = dec_s.replace(" ", "");
-                                                    signTxt.setText(signList.get(dec_s));
-                                                    signView1.setVisibility(View.VISIBLE);
-                                                    signView2.setVisibility(View.GONE);
-                                                    signView3.setVisibility(View.GONE);
-//                                                    timer1.setVisibility(View.GONE);
-//                                                    timer2.setVisibility(View.GONE);
-//                                                    timer3.setVisibility(View.GONE);
-                                                    if(drawableList.get(dec_s)!=null) {
-                                                        signView1.setImageResource(drawableList.get(dec_s));
-                                                    }else{
-                                                        signView1.setVisibility(View.INVISIBLE);
-                                                    }
-                                                    ConvertTextToSpeech(signList.get(dec_s));
-                                                }
-
-                                                /*
-                                                 *
-                                                 * Distance based on GPS and RSSI value (Need to generate a function)
-                                                 * Current Function> distance = (RSSI in dBm)**2 * 0.01
-                                                 */
-
-                                                double distance = Math.pow(Double.valueOf(rssi_val),2)*0.01;
-                                                distanceTxt.setText(String.valueOf((int)distance)+"m Ahead");
-
-                                                //prevbeacontime=beacontime;
-                                            }
-                                        }
-                                    }
-
-                                    /**
-                                     * Checks if a sign was found, if not reset all the labels
-                                     */
-                                    if (scanfound==1) {
-                                        //scanDetails.setText("Found a nearby Road Signal");
-                                        //Toast.makeText(DriverMapActivity.this, "Found a nearby Road Signal", Toast.LENGTH_SHORT).show();
-                                    }else {
-                                        //scanDetails.setText("Scanning for Road Signals");
-                                        //Toast.makeText(DriverMapActivity.this, "Found a nearby Road Signal", Toast.LENGTH_SHORT).show();
-                                        double d= SphericalUtil.computeDistanceBetween(new LatLng(mLastLocation.getLatitude(),mLastLocation.getLongitude()),lastSignLocation);
-                                        System.out.println("Print Distance: "+d);
-                                        if(d>350) {
-                                            distanceTxt.setText("No sign found");
-                                            signView2.setVisibility(View.INVISIBLE);
-                                            signView3.setVisibility(View.INVISIBLE);
-                                            signView1.setVisibility(View.INVISIBLE);
-//                                            timer1.setVisibility(View.INVISIBLE);
-//                                            timer2.setVisibility(View.INVISIBLE);
-//                                            timer3.setVisibility(View.INVISIBLE);
-                                            signTxt.setText("Road Sign Details");
-                                            signLayout.setBackgroundResource(0);
-                                        }
-
-                                    }
-                                } catch (IndexOutOfBoundsException e) {
-                                    e.printStackTrace();
-                                } catch (ConcurrentModificationException e) {
-                                    e.printStackTrace();
-                                } catch (Exception e) {
-                                    e.printStackTrace();
-                                }
-
-
-                                //scanSuccess();
-                            } else {
-                                // scan failure handling
-                                //scanFailure();
-                                System.out.println("Scan failed");
-                            }
-                        }
-                    };
-
-                    IntentFilter intentFilter = new IntentFilter();
-                    intentFilter.addAction(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION);
-                    getApplicationContext().registerReceiver(wifiScanReceiver, intentFilter);
-                    boolean success = wifiManager.startScan();
-
-                    if(!success){
-                        System.out.println("Scan failure");
-                    }
-
+                    wifiManager.startScan();
                     try {
                         Thread.sleep(500);
                     } catch (InterruptedException e) {
@@ -764,6 +360,8 @@ public class DriverMapActivity extends FragmentActivity implements OnMapReadyCal
 
             }
         });
+
+        table1Db.deleteAll();
 
 //        ShowImage.start();
 //        ShowImage2.start();
@@ -803,6 +401,461 @@ public class DriverMapActivity extends FragmentActivity implements OnMapReadyCal
         }
 
 
+    }
+
+    class ScanBroadcastReceiver extends BroadcastReceiver{
+        @Override
+        public void onReceive(Context c, Intent intent) {
+            arrayList.clear();
+            results = wifiManager.getScanResults();
+            // System.out.println(results);
+            try {
+                calendar = Calendar.getInstance();
+                for (ScanResult scanResult : results) {
+                    arrayList.add(scanResult.SSID + " ; " + scanResult.level);
+                    adapter.notifyDataSetChanged();
+                }
+
+                long hour=calendar.get(Calendar.HOUR_OF_DAY);
+                long min=calendar.get(Calendar.MINUTE);
+                long sec=calendar.get(Calendar.SECOND);
+
+                unixTime= hour*3600+min*60+sec;
+
+                //System.out.println("Array"+arrayList);
+                int scanfound=0;
+                for (int i = 0; i < arrayList.size(); i++) {
+                    String rsu[] = arrayList.get(i).split(";");
+                    if (rsu.length == 2) {
+                        String ssid = arrayList.get(i).split(";")[0];
+                        if (ssid.contains("RF")) {
+                            /**
+                             All RSU signal message starts with "R2v" encrypted to "F5W"
+                             **/
+
+                            //Flag to remind that sign was discovered
+                            scanfound=1;
+                            String rssi_val = arrayList.get(i).split(";")[1];
+                            //Decrypting Location, Heading, Timestamp and Ciphered message
+                            String dec = decrypt(ssid.substring(1));
+                            String dec_ssid = dec;
+                            System.out.println("Message: "+dec);
+
+                            if(unixTime-beacontime>600) {
+                                System.out.println(unixTime-beacontime);
+                                System.out.println("Timeout");
+                                continue;
+                            }
+                            if(prevbeacontime>beacontime){
+                                System.out.println("Previous Message");
+                                continue;
+                            }
+                            prevbeacontime=beacontime;
+                            lastSignMessage=dec;
+                            signTxt.setText(dec.substring(0,2));
+                            lastSignDistance= SphericalUtil.computeDistanceBetween(new LatLng(mLastLocation.getLatitude(),mLastLocation.getLongitude()),lastSignLocation);
+
+                            System.out.println("Now:"+lastSignDistance);
+                            System.out.println("Prev:"+prevSignDistance);
+
+
+                            if(lastSignDistance-prevSignDistance>10){
+                                System.out.println("D:"+lastSignDistance);
+                                distanceTxt.setText("Sign Passed");
+                                signView2.setVisibility(View.INVISIBLE);
+                                signView3.setVisibility(View.INVISIBLE);
+                                signView1.setVisibility(View.INVISIBLE);
+                                signLayout.setBackgroundResource(0);
+                                continue;
+                            }
+                            prevSignDistance=lastSignDistance;
+
+    //                            System.out.println(dec);
+
+                            /**
+                             * Sign Validation with
+                             * TIMESTAMP
+                             */
+
+                            //If 4-Way Junction
+                            if(dec.substring(0,2).equals("RF")){
+                                signView1.setVisibility(View.VISIBLE);
+                                signView2.setVisibility(View.VISIBLE);
+                                signView3.setVisibility(View.VISIBLE);
+
+                                signTxt.setText("4-Way Junction");
+
+                                /**
+                                 * Get angle difference between RSU and driver
+                                 * Divide into 4 boundaries
+                                 * 000 000 000 000 :: bitstream :: area1 area2 area3 area4
+                                 * 000 means Left Forward Right
+                                 * select which signals are relevant and show
+                                 */
+                                double Head = GeneralHeading;//getHeading();
+                                System.out.println(beaconhead);
+                                double signselect = (beaconhead-Head)/90;
+                                System.out.println("signselect :"+signselect);
+                                if((signselect<0.5) & (signselect>-0.5)){
+                                    signselect=0;
+                                }else if((signselect<1.5) & (signselect>0.5)){
+                                    signselect=1;
+                                }
+                                else if((signselect<2.5) & (signselect>1.5)){
+                                    signselect=2;
+                                }
+                                else if((signselect<-2.5) & (signselect>-1.5)){
+                                    signselect=2;
+                                }
+                                else if((signselect<-0.5) & (signselect>-1.5)){
+                                    signselect=3;
+                                }
+
+                                String selectBeacon = dec.substring(4,6);
+
+                                String a = selectBeacon.substring(0,  1);
+                                String b = selectBeacon.substring(1,  2);
+                                int l = obj.indexOf(a)+12;
+
+                                int m = obj.indexOf(b)+12;
+                                String signalStream= String.format("%6s",Integer.toBinaryString(l)).replace(" ","0")+String.format("%6s",Integer.toBinaryString(m)).replace(" ","0");
+                                char[] n =(signalStream.substring((int)signselect*3,(int)signselect*3+3)).toCharArray();
+
+    //                                                    timer1.setVisibility(View.VISIBLE);
+    //                                                    timer2.setVisibility(View.VISIBLE);
+    //                                                    timer3.setVisibility(View.VISIBLE);
+
+                                if(n[0]=='1'){
+                                    //timer1.setText("Go");
+                                    signView1.setImageResource(R.drawable.gap_01);
+                                }else{
+                                    //timer1.setText("Stop");
+                                    signView1.setImageResource(R.drawable.gap_02);
+                                }
+
+                                if(n[1]=='1'){
+                                    //timer2.setText("Go");
+                                    signView2.setImageResource(R.drawable.gap_05);
+                                }else{
+                                    //timer2.setText("Stop");
+                                    signView2.setImageResource(R.drawable.gap_06);
+                                }
+
+                                if(n[2]=='1'){
+                                    //timer3.setText("Go");
+                                    signView3.setImageResource(R.drawable.gap_03);
+                                }else{
+                                    //timer3.setText("Stop");
+                                    signView3.setImageResource(R.drawable.gap_04);
+                                }
+
+                                ConvertTextToSpeech("Four way junction");
+
+                            }
+
+                            //If T Junction
+                            else if(dec.substring(0,2).equals("TJ")){
+                                signLayout.setBackgroundResource(R.drawable.sign_back);
+                                signTxt.setText("T Junction");
+                                System.out.println("Inside T J");
+                                /**
+                                 * Get angle difference between RSU and driver
+                                 * Divide into 4 boundaries
+                                 * 000 000 000 :: bitstream :: area1 area2 area3
+                                 * area1 is the left side in main road
+                                 * 000 means Left Forward Right
+                                 * select which signals are relevant and show
+                                 * TESTING REQUIRED
+                                 */
+
+
+                                String timers=dec.substring(dec.length()-7);
+                                //System.out.println("Timers T Junction: "+timers);
+                                //double Head = 0;
+                                double Head=0;
+
+                                try {
+                                    Head= GeneralHeading;//getHeading();
+                                }
+                                catch (Exception e){
+                                    //Error from reading heading - Set to default heading
+                                    //headingTextView.setText("getHeading Exception");
+                                    Head=0;
+                                }
+                                //System.out.println(beaconhead);
+                                double signselect = ((beaconhead-Head)/90);
+                                System.out.println("signselect :"+signselect);
+                                if(abs(signselect)<0.5){
+                                    signselect=0;
+                                }else if(((signselect<1.5) & (signselect>0.5))|((signselect<-2.5) & (signselect>-3.5))){
+                                    signselect=1;
+                                }
+                                else if(((signselect>-1.5) & (signselect<-0.5))|((signselect>2.5) & (signselect<3.5))){
+                                    signselect=2;
+                                }
+                                else{
+                                    signView2.setVisibility(View.INVISIBLE);
+                                    signView3.setVisibility(View.INVISIBLE);
+                                    signView1.setVisibility(View.INVISIBLE);
+                                    signLayout.setBackgroundResource(0);
+                                    continue;
+                                }
+
+
+                                String selectBeacon = dec.substring(2,3);
+
+                                String a = selectBeacon.substring(0,  1);
+                                //System.out.println("DEC:"+dec);
+                                int l = obj.indexOf(a);
+                                String signalStream= String.format("%6s",Integer.toBinaryString(l)).replace(" ","0");
+                                char[] n =(signalStream.substring((int)signselect*2,(int)signselect*2+2)).toCharArray();
+                                //System.out.println("SignalStream : "+signalStream);
+                                String tim = timers.substring((int)signselect*2,(int)signselect*2+2);
+                                int tim1= obj.indexOf(String.valueOf(timers.charAt(0)));
+                                int tim2= obj.indexOf(String.valueOf(timers.charAt(1)));
+                                //System.out.println("Tim Array: "+tim+"\nt1:"+tim1+", t2:"+tim2);
+
+
+                                signView1.setVisibility(View.INVISIBLE);
+                                signView2.setVisibility(View.INVISIBLE);
+                                signView3.setVisibility(View.INVISIBLE);
+
+                                if(n[0]=='1'){
+                                    if(signselect==0) {
+                                        //timer3.setVisibility(View.VISIBLE);
+                                        signView3.setVisibility(View.VISIBLE);
+                                        //timer3.setText(String.valueOf(tim1));
+                                        signView3.setImageResource(R.drawable.gap_03);
+                                        ConvertTextToSpeech("You can turn left");
+                                    }else if (signselect==1){
+                                        //timer3.setVisibility(View.VISIBLE);
+                                        signView3.setVisibility(View.VISIBLE);
+                                        //timer3.setText(String.valueOf(tim1));
+                                        signView3.setImageResource(R.drawable.gap_03);
+                                        ConvertTextToSpeech("You can turn left");
+                                    }else {
+                                        //timer1.setVisibility(View.VISIBLE);
+                                        signView1.setVisibility(View.VISIBLE);
+                                        //timer1.setText(String.valueOf(tim1));
+                                        signView1.setImageResource(R.drawable.gap_01);
+                                        ConvertTextToSpeech("You can go straight");
+                                    }
+
+                                }else{
+                                    if(signselect==0) {
+                                        //timer3.setVisibility(View.VISIBLE);
+                                        signView3.setVisibility(View.VISIBLE);
+                                        //timer3.setText(String.valueOf(tim1));
+                                        signView3.setImageResource(R.drawable.gap_04);
+                                    }else if (signselect==1){
+                                        //timer3.setVisibility(View.VISIBLE);
+                                        signView3.setVisibility(View.VISIBLE);
+                                        //timer3.setText(String.valueOf(tim1));
+                                        signView3.setImageResource(R.drawable.gap_04);
+                                    }else {
+                                        //timer1.setVisibility(View.VISIBLE);
+                                        signView1.setVisibility(View.VISIBLE);
+                                        //timer1.setText(String.valueOf(tim1));
+                                        signView1.setImageResource(R.drawable.gap_02);
+                                    }
+                                }
+
+                                if(n[1]=='1'){
+                                    if(signselect==0) {
+                                        //timer2.setVisibility(View.VISIBLE);
+                                        signView2.setVisibility(View.VISIBLE);
+                                        //timer2.setText(String.valueOf(tim2));
+                                        signView2.setImageResource(R.drawable.gap_05);
+                                        ConvertTextToSpeech("You can turn right");
+                                    }else if (signselect==1){
+                                        //timer1.setVisibility(View.VISIBLE);
+                                        signView1.setVisibility(View.VISIBLE);
+                                        //timer1.setText(String.valueOf(tim2));
+                                        signView1.setImageResource(R.drawable.gap_01);
+                                        ConvertTextToSpeech("You can go straight");
+                                    }else {
+                                        //timer2.setVisibility(View.VISIBLE);
+                                        signView2.setVisibility(View.VISIBLE);
+                                        //timer2.setText(String.valueOf(tim2));
+                                        signView2.setImageResource(R.drawable.gap_05);
+                                        ConvertTextToSpeech("You can turn right");
+                                    }
+                                }else{
+                                    if(signselect==0) {
+                                        //timer2.setVisibility(View.VISIBLE);
+                                        signView2.setVisibility(View.VISIBLE);
+                                        //timer2.setText(String.valueOf(tim2));
+                                        signView2.setImageResource(R.drawable.gap_06);
+
+                                    }else if (signselect==1){
+                                        //timer1.setVisibility(View.VISIBLE);
+                                        signView1.setVisibility(View.VISIBLE);
+                                        //timer1.setText(String.valueOf(tim2));
+                                        signView1.setImageResource(R.drawable.gap_02);
+                                    }else {
+                                        //timer2.setVisibility(View.VISIBLE);
+                                        signView2.setVisibility(View.VISIBLE);
+                                        //timer2.setText(String.valueOf(tim2));
+                                        signView2.setImageResource(R.drawable.gap_06);
+                                    }
+
+                                }
+                                //ConvertTextToSpeech("T Junction");
+                            }
+                            else if(dec.substring(0,2).equals("EM")) {
+
+                                signView1.setVisibility(View.INVISIBLE);
+                                signView2.setVisibility(View.INVISIBLE);
+                                signView3.setVisibility(View.INVISIBLE);
+    //                                                    timer1.setVisibility(View.INVISIBLE);
+    //                                                    timer2.setVisibility(View.INVISIBLE);
+    //                                                    timer3.setVisibility(View.INVISIBLE);
+
+                                signTxt.setText("Emergency Sign");
+                                //System.out.println("DEC::"+dec);
+                                String emergencymessage = dec.substring(2,3);
+                                int l = obj.indexOf(emergencymessage)+11;
+                                emergencymessage=obj.get(l);
+                                //System.out.println("l:"+l +" M:::"+emergencymessage);
+                                if(emergencymessage.equals("1")){
+                                    double Head = 0;
+
+                                    try {
+                                        Head = GeneralHeading;//getHeading();
+                                    } catch (Exception e) {
+                                        //Error from reading heading - Set to default heading
+                                        //headingTextView.setText("getHeading Exception");
+                                        Head = 0;
+                                    }
+                                    double signselect = (beaconhead - Head);
+                                    if (abs(signselect) < 80) {
+                                        signTxt.setText("EM: Road Narrows Ahead");
+                                        ConvertTextToSpeech("Road narrows ahead");
+                                        signView1.setVisibility(View.VISIBLE);
+                                        signView1.setImageResource(R.drawable.dws_09);
+                                    }
+                                }
+                                else if(emergencymessage.equals("2")){
+                                    signTxt.setText("EM: Dangerous Bend Ahead");
+                                    ConvertTextToSpeech("Dangerous Bend Ahead");
+                                    signView1.setVisibility(View.VISIBLE);
+                                    signView1.setImageResource(R.drawable.dws_02);
+                                }
+                                else if(emergencymessage.equals("3")){
+                                    signTxt.setText("EM: Unprotected crossing");
+                                    ConvertTextToSpeech("Unprotected crossing");
+                                    signView1.setVisibility(View.VISIBLE);
+                                    signView1.setImageResource(R.drawable.dws_36);
+                                }
+                                else if(emergencymessage.equals("4")){
+                                    signTxt.setText("EM: Men at Work");
+                                    ConvertTextToSpeech("Men at work");
+                                    signView1.setVisibility(View.VISIBLE);
+                                    signView1.setImageResource(R.drawable.dws_35);
+                                }
+                                else if(emergencymessage.equals("5")){
+                                    signTxt.setText("EM: Landslide");
+                                    ConvertTextToSpeech("Landslide ahead, be cautious");
+                                    signView1.setVisibility(View.VISIBLE);
+                                    signView1.setImageResource(R.drawable.dws_31);
+                                }
+                                else if(emergencymessage.equals("6")){
+                                    signTxt.setText("EM: Flood");
+                                    ConvertTextToSpeech("Flood ahead, can't go forward");
+                                    signView1.setVisibility(View.VISIBLE);
+                                    signView1.setImageResource(R.drawable.prs_02);
+                                }
+                                else if(emergencymessage.equals("7")){
+                                    signTxt.setText("EM: Slippery Road");
+                                    ConvertTextToSpeech("Slippery road due to oil leak");
+                                    signView1.setVisibility(View.VISIBLE);
+                                    signView1.setImageResource(R.drawable.dws_29);
+                                }
+                                else if(emergencymessage.equals("8")) {
+                                    double Head = 0;
+
+                                    try {
+                                        Head = GeneralHeading;//getHeading();
+                                    } catch (Exception e) {
+                                        //Error from reading heading - Set to default heading
+                                        //headingTextView.setText("getHeading Exception");
+                                        Head = 0;
+                                    }
+                                    double signselect = (beaconhead - Head);
+                                    if (abs(signselect) < 80) {
+                                        signTxt.setText("EM: Road Closed");
+                                        ConvertTextToSpeech("Road closed ahead, please find a different route");
+                                        signView1.setVisibility(View.VISIBLE);
+                                        signView1.setImageResource(R.drawable.phs_10);
+                                    }
+                                }
+                            }
+                            else{
+                                String dec_s = dec.toLowerCase();
+                                dec_s = dec_s.replace('-', '_');
+                                dec_s = dec_s.replace(" ", "");
+                                signTxt.setText(signList.get(dec_s));
+                                signView1.setVisibility(View.VISIBLE);
+                                signView2.setVisibility(View.GONE);
+                                signView3.setVisibility(View.GONE);
+    //                                                    timer1.setVisibility(View.GONE);
+    //                                                    timer2.setVisibility(View.GONE);
+    //                                                    timer3.setVisibility(View.GONE);
+                                if(drawableList.get(dec_s)!=null) {
+                                    signView1.setImageResource(drawableList.get(dec_s));
+                                }else{
+                                    signView1.setVisibility(View.INVISIBLE);
+                                }
+                                ConvertTextToSpeech(signList.get(dec_s));
+                            }
+
+                            /*
+                             *
+                             * Distance based on GPS and RSSI value (Need to generate a function)
+                             * Current Function> distance = (RSSI in dBm)**2 * 0.01
+                             */
+
+                            double distance = Math.pow(Double.valueOf(rssi_val),2)*0.01;
+                            distanceTxt.setText(String.valueOf((int)distance)+"m Ahead");
+
+                            //prevbeacontime=beacontime;
+                        }
+                    }
+                }
+
+                /**
+                 * Checks if a sign was found, if not reset all the labels
+                 */
+
+                if (scanfound==1) {
+                    //scanDetails.setText("Found a nearby Road Signal");
+                    //Toast.makeText(DriverMapActivity.this, "Found a nearby Road Signal", Toast.LENGTH_SHORT).show();
+                }else {
+                    //scanDetails.setText("Scanning for Road Signals");
+                    //Toast.makeText(DriverMapActivity.this, "Found a nearby Road Signal", Toast.LENGTH_SHORT).show();
+
+                    double d= SphericalUtil.computeDistanceBetween(new LatLng(mLastLocation.getLatitude(),mLastLocation.getLongitude()),lastSignLocation);
+                    System.out.println("Print Distance: "+d);
+                    if(d>100) {
+                        distanceTxt.setText("No sign found");
+                        signView2.setVisibility(View.INVISIBLE);
+                        signView3.setVisibility(View.INVISIBLE);
+                        signView1.setVisibility(View.INVISIBLE);
+                        signTxt.setText("Road Sign Details");
+                        signLayout.setBackgroundResource(0);
+                        prevSignDistance=MINDISTANCETODYNAMIC;
+                        lastSignDistance=0;
+                    }
+
+                }
+            } catch (IndexOutOfBoundsException e) {
+                e.printStackTrace();
+            } catch (ConcurrentModificationException e) {
+                e.printStackTrace();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
 
@@ -940,7 +993,7 @@ public class DriverMapActivity extends FragmentActivity implements OnMapReadyCal
         double sign_lon = lon_i + lon_f;
 
         lastSignLocation = new LatLng(sign_lat, sign_lon);
-
+        System.out.println(sign_lat+" , "+sign_lon);
 
         String signLocTxt= "Lat: " + sign_lat + "\n" + "Lon: " + sign_lon;
         String encrypted = ssid.substring(18);
@@ -1131,41 +1184,38 @@ public class DriverMapActivity extends FragmentActivity implements OnMapReadyCal
             try {
                 targetLocation.setLatitude(parseDouble(roadSign.getLatitude()));       //your co-ords of course
                 targetLocation.setLongitude(parseDouble(roadSign.getLongitude()));
-                targetSignLocation = new LatLng(parseDouble(roadSign.getLatitude()),parseDouble(roadSign.getLongitude()));
+                targetSignLocation = new LatLng(parseDouble(roadSign.getLatitude()), parseDouble(roadSign.getLongitude()));
             } catch (NumberFormatException e) {
                 e.printStackTrace();
             }
             float distanceInMeters = mLastLocation.distanceTo(targetLocation);
-            currentLocation = new LatLng(mLastLocation.getLatitude(),mLastLocation.getLongitude());
-            Double headingToSign = SphericalUtil.computeHeading(currentLocation,targetSignLocation);
+            currentLocation = new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude());
+            Double headingToSign = SphericalUtil.computeHeading(currentLocation, targetSignLocation);
 
             if (headingToSign < 0) {
-                headingToSign =  headingToSign + 360;
+                headingToSign = headingToSign + 360;
             }
 
-            if (distanceInMeters <= roadSign.getDistance())
-            {                                     //Compare new distance to the RS with previous distance
+            if (distanceInMeters <= roadSign.getDistance()) {                                     //Compare new distance to the RS with previous distance
                 if ((abs(heading - headingToSign) < 89) ||
-                    (abs(heading - headingToSign) > 271))
-                {
+                        (abs(heading - headingToSign) > 271)) {
                     if ((abs(heading - roadSign.getHeading()) < 45) ||
-                            (abs(heading - roadSign.getHeading()) > 315))
-                    {
-                        if(distanceInMeters < lowestdistance && distanceInMeters > 5.0)
-                        {
+                            (abs(heading - roadSign.getHeading()) > 315)) {
+                        if (distanceInMeters < lowestdistance && distanceInMeters > 5.0) {
                             System.out.println("yahooooooooooooooooooooooooo");
                             targetSign = roadSign;
                             lowestdistance = distanceInMeters;
-                        }else if (lowestdistance < distanceInMeters && distanceInMeters < 100)
-                        {
-                            if(distanceInMeters < lowestdistance2 && distanceInMeters > 5.0)
-                            {
-                                System.out.println("yahooooooooooooooooooooooooo2222222222222");
-                                secondClosestSign = roadSign;
-                                lowestdistance2 = distanceInMeters;
-                            }
-
                         }
+//                        else if (lowestdistance < distanceInMeters && distanceInMeters < 100)
+//                        {
+//                            if(distanceInMeters < lowestdistance2 && distanceInMeters > 5.0)
+//                            {
+//                                System.out.println("yahooooooooooooooooooooooooo2222222222222");
+//                                secondClosestSign = roadSign;
+//                                lowestdistance2 = distanceInMeters;
+//                            }
+//
+//                        }
                     }
                 }
             }
@@ -1183,41 +1233,89 @@ public class DriverMapActivity extends FragmentActivity implements OnMapReadyCal
 
         //mSignImage1.setImageResource(images[Temp_sign]);
 
-
         String targetSignName = (targetSign != null) ? targetSign.getName() : null;
 
         if (targetSignName != null && (drawableList.get(targetSignName) != null)) {
-            RoadSignToShow = targetSignName;
-            signTxt.setText(signList.get(targetSignName));
-            if (targetSign.getId() != tempID) {
-                Log.i("OH Id changed",String.valueOf(targetSign.getId()));
-                if (audio == 1) {
-                    ConvertTextToSpeech(signList.get(targetSignName));
-                    tempID = targetSign.getId();
+            if(sstm1 != targetSign.getId()){
+                if(sstm2 != targetSign.getId())
+                {
+                    showCounter = 0;
+                    RoadSignToShow = targetSignName;
+                    mSignImage2.setImageResource(drawableList.get(RoadSignToShow));
+                    signTxt.setText(signList.get(targetSignName));
+                    sstm2 = sstm1;
+                    sstm1 = targetSign.getId();
+                    if (targetSign.getId() != tempID) {
+                        Log.i("OH Id changed",String.valueOf(targetSign.getId()));
+                        if (audio == 1) {
+                            ConvertTextToSpeech(signList.get(targetSignName));
+                            tempID = targetSign.getId();
+                        }
+                    }
+                }else
+                {
+                    RoadSignToShow = "nosign";
+                    mSignImage2.setImageResource(drawableList.get(RoadSignToShow));
+                }
+            }else
+            {
+                if(showCounter<3){
+                    RoadSignToShow = targetSignName;
+                    mSignImage2.setImageResource(drawableList.get(RoadSignToShow));
+                    showCounter = showCounter + 1;
+                }else
+                {
+                    RoadSignToShow = "nosign";
+                    mSignImage2.setImageResource(drawableList.get(RoadSignToShow));
                 }
             }
-
-        } else {
-            RoadSignToShow = "nosign";
-        }
-        mSignImage2.setImageResource(drawableList.get(RoadSignToShow));
-
-
-        if ((secondClosestSign != null) && (secondClosestSign.getName() != null) &&
-                (drawableList.get(secondClosestSign.getName()) != null))
+        }else
         {
-            tempID2 = secondClosestSign.getId();
-            if (!tempID2.equals(tempID)) {
-                RoadSignToShow2 = secondClosestSign.getName();
+            if(showCounter<3){
+                mSignImage2.setImageResource(drawableList.get(RoadSignToShow));
+                showCounter = showCounter + 1;
+            }else
+            {
+                RoadSignToShow = "nosign";
+                mSignImage2.setImageResource(drawableList.get(RoadSignToShow));
             }
-        } else {
-            RoadSignToShow2 = "nosign";
         }
 
-        mSignImage1.setImageResource(drawableList.get(RoadSignToShow2));
+//        String targetSignName = (targetSign != null) ? targetSign.getName() : null;
+//
+//        if (targetSignName != null && (drawableList.get(targetSignName) != null)) {
+//            RoadSignToShow = targetSignName;
+//            mSignImage2.setImageResource(drawableList.get(RoadSignToShow));
+//            signTxt.setText(signList.get(targetSignName));
+//            if (targetSign.getId() != tempID) {
+//                Log.i("OH Id changed", String.valueOf(targetSign.getId()));
+//                if (audio == 1) {
+//                    ConvertTextToSpeech(signList.get(targetSignName));
+//                    tempID = targetSign.getId();
+//                }
+//            }
+//
+//        } else {
+//            RoadSignToShow = "nosign";
+//            mSignImage2.setImageResource(drawableList.get(RoadSignToShow));
+//        }
 
+
+//        if ((secondClosestSign != null) && (secondClosestSign.getName() != null) &&
+//                (drawableList.get(secondClosestSign.getName()) != null))
+//        {
+//            tempID2 = secondClosestSign.getId();
+//            if (!tempID2.equals(tempID)) {
+//                RoadSignToShow2 = secondClosestSign.getName();
+//            }
+//        } else {
+//            RoadSignToShow2 = "nosign";
+//        }
+//
+//        mSignImage1.setImageResource(drawableList.get(RoadSignToShow2));
 
     }
+
 
     public void showMessage(String title, String Message) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -1260,8 +1358,10 @@ public class DriverMapActivity extends FragmentActivity implements OnMapReadyCal
                 .bearing(bearing)
                 .build();
         LatLng latLng = new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude());
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-        mMap.animateCamera(CameraUpdateFactory.zoomTo(17)); //zoom level
+
+
+        googleMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+        googleMap.animateCamera(CameraUpdateFactory.zoomTo(17.01f)); //zoom level
         googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(camPos));
 
     }
@@ -1288,6 +1388,20 @@ public class DriverMapActivity extends FragmentActivity implements OnMapReadyCal
         LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
     }
 
+    @Override
+    public void onBackPressed() {
+
+        if(backpressedTime+2000 > System.currentTimeMillis()){
+            backToast.cancel();
+            super.onBackPressed();
+            return;
+        }else {
+            backToast = Toast.makeText(DriverMapActivity.this,"Press back again to exit",Toast.LENGTH_SHORT);
+            backToast.show();
+        }
+
+        backpressedTime = System.currentTimeMillis();
+    }
 
     private void ConvertTextToSpeech(String RoadSign) {
         // TODO Auto-generated method stub
@@ -1395,8 +1509,8 @@ public class DriverMapActivity extends FragmentActivity implements OnMapReadyCal
         mLastLocation = location;
 
         LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-        mMap.animateCamera(CameraUpdateFactory.zoomTo(17)); //zoom level
+//        mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+//        mMap.animateCamera(CameraUpdateFactory.zoomTo(17.0f)); //zoom level
         GeneralHeading = getHeadingL();
         updateCameraBearing(mMap,(float) GeneralHeading);
         GeneranHeading2 = GeneralHeading;
@@ -1433,6 +1547,7 @@ public class DriverMapActivity extends FragmentActivity implements OnMapReadyCal
     public void onProviderDisabled(String provider) {
 
     }
+
 
     private enum MobileServiceEnum {LOCATION, INTERNET}
 }

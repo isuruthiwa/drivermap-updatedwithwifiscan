@@ -857,6 +857,7 @@ drawable phs_23
 drawable phs_24
 drawable phs_25
 drawable phs_26
+drawable pin
 drawable prs_01
 drawable prs_02
 drawable prs_03
@@ -888,13 +889,9 @@ drawable zc02
 id ALT
 id CTRL
 id FUNCTION
-id FirstName
-id LastName
 id META
-id NationalIdNo
 id SHIFT
 id SYM
-id SignUp
 id action0
 id action_bar
 id action_bar_activity_content
@@ -930,6 +927,7 @@ id barrier
 id beginning
 id blocking
 id bottom
+id button2
 id buttonPanel
 id button_add
 id button_delete
@@ -964,6 +962,7 @@ id editText_LONGI2
 id editText_id
 id editText_lati2
 id edit_query
+id email
 id end
 id end_padder
 id expand_activities_button
@@ -1012,11 +1011,11 @@ id notification_main_column_container
 id packed
 id parent
 id parentPanel
+id password
 id percent
 id progress_circular
 id progress_horizontal
 id radio
-id retypePassword
 id right
 id right_icon
 id right_side
@@ -1044,12 +1043,9 @@ id signInButton
 id signLayout
 id signTxt
 id signUpButton
-id signUpEmail
-id signUpPhoneNo
 id signView1
 id signView2
 id signView3
-id signupPassword
 id spacer
 id split_action_bar
 id spread
@@ -1072,6 +1068,7 @@ id text2
 id textSpacerNoButtons
 id textSpacerNoTitle
 id textView3
+id textView4
 id textView5
 id textView6
 id textView8

@@ -1,4 +1,4 @@
-# Referenced at C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11 - ANDROIDQ\app\build\intermediates\merged_manifests\debug\AndroidManifest.xml:28
+# Referenced at /home/fyp19/Desktop/driver-app-feb11 - ANDROIDQ - NEWVERSION2/app/build/intermediates/merged_manifests/debug/AndroidManifest.xml:32
 -keep class androidx.core.app.CoreComponentFactory { <init>(); }
-# Referenced at C:\Users\ASUS\Downloads\driver-app-feb11\driver-app-feb11 - ANDROIDQ\app\build\intermediates\merged_manifests\debug\AndroidManifest.xml:28
+# Referenced at /home/fyp19/Desktop/driver-app-feb11 - ANDROIDQ - NEWVERSION2/app/build/intermediates/merged_manifests/debug/AndroidManifest.xml:32
 -keep class androidx.multidex.MultiDexApplication { <init>(); }

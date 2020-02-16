@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "C:\\Users\\ASUS\\Downloads\\driver-app-feb11\\driver-app-feb11 - ANDROIDQ\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-zh-rTW\\values-zh-rTW.xml",
+            "outputFile": "/home/fyp19/Desktop/driver-app-feb11 - ANDROIDQ - NEWVERSION2/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-zh-rTW/values-zh-rTW.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\ASUS\\.gradle\\caches\\transforms-1\\files-1.1\\jetified-play-services-basement-16.0.1.aar\\d1e6ccf75bf88a1b49489214003f4082\\res\\values-zh-rTW\\values.xml",
+                    "source": "/home/fyp19/.gradle/caches/transforms-1/files-1.1/jetified-play-services-basement-17.0.0.aar/33768a118ea4e6d19dca415c9c1e3895/res/values-zh-rTW/values.xml",
                     "from": {
                         "startLines": "4",
                         "startColumns": "0",
@@ -21,7 +21,7 @@
                     }
                 },
                 {
-                    "source": "C:\\Users\\ASUS\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-1.0.0.aar\\4edc3c17b86502a79c534cc67805831b\\res\\values-zh-rTW\\values-zh-rTW.xml",
+                    "source": "/home/fyp19/.gradle/caches/transforms-1/files-1.1/appcompat-1.0.0.aar/31c25ef49a469efe5d7793c31a0f0db8/res/values-zh-rTW/values-zh-rTW.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29",
                         "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
@@ -38,7 +38,7 @@
                     }
                 },
                 {
-                    "source": "C:\\Users\\ASUS\\.gradle\\caches\\transforms-1\\files-1.1\\core-1.0.0.aar\\b1418af80fbe1310bb6e5075d34adc42\\res\\values-zh-rTW\\values-zh-rTW.xml",
+                    "source": "/home/fyp19/.gradle/caches/transforms-1/files-1.1/core-1.0.0.aar/668b4774946a975fd96ebae9169213a8/res/values-zh-rTW/values-zh-rTW.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",
@@ -55,7 +55,7 @@
                     }
                 },
                 {
-                    "source": "C:\\Users\\ASUS\\.gradle\\caches\\transforms-1\\files-1.1\\jetified-play-services-base-16.0.1.aar\\eefce12c7505875a20d076ffe943ad62\\res\\values-zh-rTW\\values.xml",
+                    "source": "/home/fyp19/.gradle/caches/transforms-1/files-1.1/play-services-base-17.1.0.aar/27412fcd217873a8ad4b40a84cc9ba54/res/values-zh-rTW/values.xml",
                     "from": {
                         "startLines": "4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20",
                         "startColumns": "0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0",
